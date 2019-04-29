@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            .container {
+                margin: 0 auto;
+                width: 280px;
+                background-color: #fafafa;
+            }
+
+            p[data-status="true"] {
+                color: green;
+            }
+
+            p[data-status="false"] {
+                color: red;
+            }
+        </style>
+        <title>Narcissistic Number</title>
+    </head>
+    <body>
+        <div class="container">
+            <h3>Question 2 - Narcissistic Number</h3>
+            <p>Type in a number to check if it's narcissistic</p>
+            <input type="number" id="myNumber" onfocus="this.value=''" min="1" autofocus />
+            <button id="btn">evaluate</button>
+            <p id="displayResult"></p>
+        </div>
+
+
+
+
+
+
+        <script type="text/javascript">
+            let displayResultEl = document.getElementById("displayResult");
+            let inputField = document.getElementById("myNumber"); //this is an object
+
+            function isPositiveInt(x) {
+                return x % 1 === 0 && x > 0;
+            }
+
+            let narcissistic = function() {
+                let strValue = inputField.value; //this is a string
+                if(isPositiveInt(strValue)) { //in the isPositiveInt func, JS does implicit type conversion
+                    let power = strValue.length;
+                    let allDigits = [];
+
+                    for(let i = 0; i < power; i++) {
+                        allDigits.push(parseInt(strValue[i]));
+                    }
+
+                    let raisedToPowers = allDigits.map(digit => Math.pow(digit,power));
+                    let total = raisedToPowers.reduce((sum, raisedToPower) => {
+                        return sum + raisedToPower;
+                    }, 0);
+                    if(total == strValue) {
+                        displayResultEl.dataset.status = "true";
+                        return `TRUE! ${strValue} is a narcissitic number`;
+                    } else {
+                        displayResultEl.dataset.status = "false";
+                        return `False! ${strValue} is not a narcissitic number`;
+                    }
+                } else {
+                    displayResultEl.dataset.status = "false";
+                    return "Use positive integers only";
+                }
+            }
+
+            let btnEl = document.getElementById("btn");
+            btnEl.onclick = function() {
+            displayResultEl.innerHTML = narcissistic();
+            }
+
+            const enterKey = 13;
+            inputField.addEventListener("keyup", function(event) {
+                event.preventDefault();
+                if(event.keyCode === enterKey) {
+                    btnEl.click();
+                }
+            });
+
+
+        </script>
+
+
+
+
+
+    </body>
+</html>
