@@ -7,36 +7,50 @@ var expense = {
 // var type = expense.type;
 // var amount = expense.amount;
 
-//ES6 refactor
-//We can use destructuring for drammatically decreasing the
-//amount of code that we have to write whenever we are
-//pulling properties off an object
+// ES6 refactor
+// We can use destructuring to dramatically decrease the
+// amount of code that we have to write whenever we are
+// pulling properties off an object
 
 
 // const { type } = expense;
 // const { amount } = expense;
 
-//In the above, we are not making an object on the LHS
-//The syntax on the left says basically
-//I want to declare a new variable called type
-//and I want to reference the expense.type property.
-//Same thing with amount. Yes, of course, you can keywords var and let as well
+// In the above, we are not making an object on the LHS
+// The syntax on the left says basically
+// I want to declare a new variable called type
+// and I want to reference the expense.type property.
+// Same thing with amount.
+// Yes, of course, you can use keywords var and let as well
 
-//NB: In destructuring, the name of the variable must
-//be identical to the name of the property that we are trying
-//to copy off
+// NB: In destructuring, the name of the variable must
+// be identical to the name of the property that we are trying
+// to copy off
 
-//When we are destructuring properties, we can combine
-//the operations into a single line
+// When we are destructuring properties, we can combine
+// the operations into a single line
 
 const { type, amount } = expense;
 
-console.log(type);
-console.log(amount);
+console.log(type); // Business
+console.log(amount); // 45 NGN
 
+// Or you can assign new variable names to the key while destructuring
+const httpOptions = { timeout: 2000, isCache: true };
 
-//We can also make use of destructuring to pull properties off
-//of objects that are passed to functions
+const { timeout: httpTimeout, isCache: httpCache } = httpOptions;
+
+console.log(httpTimeout) // 2000
+console.log(httpCache) // true
+
+const httpOptions2 = { timeout: 2000, cache: { age: 2 } };
+
+const { cache: { age } } = httpOptions2
+
+console.log(age) // 2
+
+// We can also make use of destructuring to pull properties off
+// of objects that are passed to functions
 var savedFile = {
     extension: 'jpg',
     name: 'repost',
@@ -80,7 +94,7 @@ console.log(name); // Google
 //the rule behind destructuring arrays is basically the place
 // in which we place the variable in "const []" is the order
 // we pull it out of the array
-//so if we add in another element
+// so if we add in another element
 
 const [ firm, firm2 ] = companies;
 console.log(firm2); // Facebook
@@ -88,13 +102,14 @@ console.log(firm2); // Facebook
 const [ llc, llc2, llc3 ] = companies;
 console.log(llc3); // Uber
 
-//we can pull off the length of the array as well
-const { length } = companies; //note this is in curly braces
+// we can pull off the length of the array as well
+const { length } = companies; // note this is in curly braces
 console.log(length);
 
 
-// WE can use rest rest operator in destructuring
+// We can use rest operator in destructuring
 const [plc, ...rest] = companies;
+console.log(plc) // Google
 console.log(...rest); // Facebook Uber
 
 
@@ -109,9 +124,9 @@ const firms = [
 //var location = firms[0].location;
 
 //By using destructuring
-const [ {name1} ] = firms;
+const [ { name1 } ] = firms;
 
-console.log(name1);
+console.log(name1); // Google
 
 
 
@@ -121,30 +136,35 @@ const Google = {
 
 
 const { locations: [city] } = Google;
-console.log(city);
+console.log(city); // Mountain View
 
 
 
 function signup(username, password, email, dateOfBirth, city) {
-    //create new user
+  // create new user
 }
 
 signup('myname', 'mypassword', 'myemail@example.com', '1/1/1990', 'New York');
 
 
-//destructure
-function signup( {email, password, dateOfBirth, city, username} ) { //I am now pulling off the properties off my user object. By destructuring, I do not anymore have to worry about the order of the arguments
-    //create new user
-}
+//refactor
+signup(user); // redefine function to take an object
 const user = {
-    username: 'myname',
-    password: 'mypassword',
-    email: 'myemail@example.com',
-    dateOfBirth: '1/1/1990',
-    city: 'New York'
+  username: 'myname',
+  password: 'mypassword',
+  email: 'myemail@example.com',
+  dateOfBirth: '1/1/1990',
+  city: 'New York'
 };
 
-signup(user);
+function signup( { email, password, dateOfBirth, city, username } ) {
+  //I am now pulling off the properties off my user object.
+  // By destructuring, I do not anymore have to worry about the order of the arguments
+  // create new user
+}
+
+
+
 
 
 
@@ -164,7 +184,7 @@ const points = [
 
 //let's use ES6
 changedStructure = points.map(([ x, y ]) => {
-  return { x, y }; // I used the enhanced object literal here
+  return { x, y };
 });
 
 
