@@ -57,7 +57,17 @@ team = {
     members: ['Jane', 'Bill'],
     teamName: 'Super Squad',
     teamSummary: function() {
-        var self = this; //this is another workaround the lost issue
+        return this.members.map(function(member) {
+            return `${member} is on team ${this.teamName}`; //whenever we have a function passed off to somewhere else in our code base, the value of 'this' gets lost. Hence this.teamName is not pointing to team.teamName
+        }, this); // another workaround is by passing this as a second parameter of the map function.
+    }
+};
+
+team = {
+    members: ['Jane', 'Bill'],
+    teamName: 'Super Squad',
+    teamSummary: function() {
+        var self = this; //this is another workaround for the lost issue
         return this.members.map(function(member) {
             return `${member} is on team ${self.teamName}`;
         });
